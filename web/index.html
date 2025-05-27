@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaturaCode - Programming in Plain English</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .natura-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .code-font {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        
+        .natura-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .pulse-border {
+            animation: pulse-border 2s infinite;
+        }
+        
+        @keyframes pulse-border {
+            0%, 100% { border-color: #667eea; }
+            50% { border-color: #764ba2; }
+        }
+        
+        .output-line {
+            animation: fadeInUp 0.3s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        function NaturaCodeIDE() {
+            const [code, setCode] = useState(`note: Welcome to NaturaCode! Try these examples:
+
+create a number called age with value 25
+show "Hello! I am"
+show age
+show "years old"
+
+if age is above 18, show "I can vote!" otherwise show "Not old enough yet"
+
+create a task called "Learn NaturaCode" with status "pending"
+create a task called "Build something amazing" with status "pending"
+show all tasks
+
+mark task "Learn NaturaCode" as complete
+show tasks where status is "complete"`);
+            
+            const [output, setOutput] = useState([]);
+            const [isRunning, setIsRunning] = useState(false);
+            const [context, setContext] = useState({ variables: {}, tasks: [] });
+            const outputRef = useRef(null);
+
+            // Auto-scroll output to bottom
+            useEffect(() => {
+                if (outputRef.current) {
+                    outputRef.current.scrollTop = outputRef.current.scrollHeight;
+                }
+            }, [output]);
+
+            const runCode = async () => {
+                setIsRunning(true);
+                setOutput([]);
+
+                try {
+                    const response = await fetch('/run', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ code }),
+                    });
+
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        setOutput(result.output);
+                        setContext(result.context);
+                    } else {
+                        setOutput([`❌ Error: ${result.error}`]);
+                    }
+                } catch (error) {
+                    setOutput([`❌ Network Error: ${error.message}`]);
+                }
+
+                setIsRunning(false);
+            };
+
+            const clearOutput = () => {
+                setOutput([]);
+                setContext({ variables: {}, tasks: [] });
+            };
+
+            const loadExample = (example) => {
+                const examples = {
+                    variables: `create a number called x with value 10
+add 5 to x
+multiply x by 2
+show x
+
+create a string called greeting with value "Hello World"
+show greeting`,
+
+                    tasks: `create a task called "Write code" with status "pending"
+create a task called "Test code" with status "pending"
+create a task called "Deploy code" with status "complete"
+
+show all tasks
+mark task "Write code" as complete
+show tasks where status is "complete"`,
+
+                    logic: `create a number called temperature with value 75
+
+if temperature is above 80, show "It's hot!" otherwise show "It's nice!"
+
+add 10 to temperature
+if temperature is above 80, show "Now it's hot!"`,
+
+                    loops: `create a number called counter with value 0
+
+repeat 5 times
+    add 1 to counter
+    show counter
+end
+
+show "Done counting!"`,
+
+                    api: `connect to the API at "https://api.example.com/search"
+send a search for "programming tips" using the key "query"
+get the response
+show the response`
+                };
+
+                setCode(examples[example] || examples.variables);
+            };
+
+            const convertToSpeech = async () => {
+                try {
+                    const response = await fetch('/to-speech', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ context }),
+                    });
+
+                    const result = await response.json();
+                    setOutput([`🗣️ Speech: ${result.speech}`]);
+                } catch (error) {
+                    setOutput([`❌ Error: ${error.message}`]);
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+                    {/* Header */}
+                    <div className="natura-gradient text-white py-6 natura-shadow">
+                        <div className="container mx-auto px-4">
+                            <h1 className="text-4xl font-bold mb-2">🌿 NaturaCode</h1>
+                            <p className="text-xl opacity-90">Programming in Plain English</p>
+                            <p className="text-sm opacity-75 mt-1">Where code becomes conversation</p>
+                        </div>
+                    </div>
+
+                    <div className="container mx-auto px-4 py-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            {/* Code Editor */}
+                            <div className="bg-white rounded-lg natura-shadow p-6">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h2 className="text-2xl font-semibold text-gray-800">✍️ Write Your Code</h2>
+                                    <div className="flex gap-2">
+                                        <select 
+                                            onChange={(e) => loadExample(e.target.value)}
+                                            className="px-3 py-1 border border-gray-300 rounded-md text-sm"
+                                        >
+                                            <option value="">Load Example...</option>
+                                            <option value="variables">Variables & Math</option>
+                                            <option value="tasks">Task Management</option>
+                                            <option value="logic">Conditional Logic</option>
+                                            <option value="loops">Loops</option>
+                                            <option value="api">API Calls</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <textarea
+                                    value={code}
+                                    onChange={(e) => setCode(e.target.value)}
+                                    className="w-full h-96 p-4 border-2 border-gray-200 rounded-lg code-font text-sm resize-none focus:outline-none focus:border-indigo-500 pulse-border"
+                                    placeholder="Type your NaturaCode here... 
+
+Examples:
+create a number called x with value 10
+add 5 to x
+show x"
+                                />
+                                
+                                <div className="flex gap-3 mt-4">
+                                    <button
+                                        onClick={runCode}
+                                        disabled={isRunning}
+                                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isRunning ? '🔄 Running...' : '▶️ Run Code'}
+                                    </button>
+                                    
+                                    <button
+                                        onClick={clearOutput}
+                                        className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                                    >
+                                        🗑️ Clear
+                                    </button>
+                                    
+                                    <button
+                                        onClick={convertToSpeech}
+                                        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                                    >
+                                        🗣️ To Speech
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Output Panel */}
+                            <div className="bg-white rounded-lg natura-shadow p-6">
+                                <h2 className="text-2xl font-semibold text-gray-800 mb-4">📺 Output</h2>
+                                
+                                <div 
+                                    ref={outputRef}
+                                    className="bg-gray-900 text-green-400 p-4 rounded-lg h-96 overflow-y-auto code-font text-sm"
+                                >
+                                    {output.length === 0 ? (
+                                        <div className="text-gray-500 italic">
+                                            Output will appear here when you run your code...
+                                        </div>
+                                    ) : (
+                                        output.map((line, index) => (
+                                            <div key={index} className="output-line mb-1">
+                                                {line}
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+
+                                {/* Context Display */}
+                                {(Object.keys(context.variables).length > 0 || context.tasks?.length > 0) && (
+                                    <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                                        <h3 className="font-semibold text-gray-700 mb-2">📊 Current State</h3>
+                                        
+                                        {Object.keys(context.variables).length > 0 && (
+                                            <div className="mb-3">
+                                                <h4 className="font-medium text-gray-600 mb-1">Variables:</h4>
+                                                {Object.entries(context.variables).map(([name, value]) => (
+                                                    <div key={name} className="text-sm text-gray-700">
+                                                        <span className="font-mono bg-gray-200 px-2 py-1 rounded">{name}</span>: {value}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                        
+                                        {context.tasks?.length > 0 && (
+                                            <div>
+                                                <h4 className="font-medium text-gray-600 mb-1">Tasks:</h4>
+                                                {context.tasks.map((task, index) => (
+                                                    <div key={index} className="text-sm text-gray-700 flex items-center gap-2">
+                                                        <span>{task.status === 'complete' ? '✅' : '⏳'}</span>
+                                                        <span>{task.name}</span>
+                                                        <span className="text-gray-500">({task.status})</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Syntax Guide */}
+                        <div className="mt-8 bg-white rounded-lg natura-shadow p-6">
+                            <h2 className="text-2xl font-semibold text-gray-800 mb-4">📖 Quick Syntax Guide</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div>
+                                    <h3 className="font-semibold text-indigo-600 mb-2">Variables & Math</h3>
+                                    <div className="text-sm text-gray-700 space-y-1 code-font">
+                                        <div>create a number called x with value 10</div>
+                                        <div>create a string called name with value "Alice"</div>
+                                        <div>add 5 to x</div>
+                                        <div>subtract 3 from x</div>
+                                        <div>multiply x by 2</div>
+                                        <div>divide x by 4</div>
+                                        <div>show x</div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 className="font-semibold text-indigo-600 mb-2">Tasks</h3>
+                                    <div className="text-sm text-gray-700 space-y-1 code-font">
+                                        <div>create a task called "Buy milk" with status "pending"</div>
+                                        <div>mark task "Buy milk" as complete</div>
+                                        <div>show all tasks</div>
+                                        <div>show tasks where status is "complete"</div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 className="font-semibold text-indigo-600 mb-2">Logic & Loops</h3>
+                                    <div className="text-sm text-gray-700 space-y-1 code-font">
+                                        <div>if x is above 10, show "High"</div>
+                                        <div>if x is below 5, show "Low" otherwise show "OK"</div>
+                                        <div>repeat 3 times</div>
+                                        <div>while x is below 10</div>
+                                        <div>end</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<NaturaCodeIDE />, document.getElementById('root'));
+    </script>
+</body>
+</html>

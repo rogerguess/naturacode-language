@@ -1,0 +1,54 @@
+note: Advanced task management system
+
+show "📋 Advanced Todo Manager"
+show "========================"
+
+note: Create initial tasks
+create a task called "Learn NaturaCode syntax" with status "complete"
+create a task called "Build a web app" with status "pending"
+create a task called "Write documentation" with status "pending"
+create a task called "Run tests" with status "complete"
+create a task called "Deploy to production" with status "pending"
+create a task called "Celebrate success" with status "pending"
+
+show "All tasks:"
+show all tasks
+
+note: Mark some tasks as complete
+mark task "Build a web app" as complete
+mark task "Write documentation" as complete
+
+show ""
+show "✅ Completed tasks:"
+show tasks where status is "complete"
+
+show ""
+show "⏳ Pending tasks:"
+show tasks where status is "pending"
+
+note: Create project tracking variables
+create a number called total_tasks with value 6
+create a number called completed_tasks with value 4
+create a number called pending_tasks with value 2
+
+note: Calculate completion percentage
+create a number called completion_rate with value 0
+multiply completed_tasks by 100
+divide completed_tasks by total_tasks
+
+show ""
+show "📊 Project Statistics:"
+show "Total tasks:"
+show total_tasks
+show "Completed:"
+show completed_tasks  
+show "Pending:"
+show pending_tasks
+
+if completed_tasks is above 3, show "🎉 Great progress!" otherwise show "Keep working!"
+
+note: Check if ready for deployment
+if pending_tasks is below 3, show "🚀 Almost ready for deployment!" otherwise show "⏰ More work needed"
+
+show ""
+show "Task management demo complete!"

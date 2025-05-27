@@ -1,0 +1,25 @@
+{
+  "name": "naturacode-language",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "cli": "node src/cli.js",
+    "test": "jest",
+    "dev": "node src/server.js",
+    "setup-github": "node setup-github.js"
+  },
+  "keywords": ["programming", "natural-language", "english", "code", "interpreter"],
+  "author": "Claude & Human",
+  "license": "MIT",
+  "description": "NaturaCode - A programming language that speaks human. Write code in plain English.",
+  "dependencies": {
+    "express": "^5.1.0",
+    "jest": "^29.7.0"
+  }
+}

@@ -1,0 +1,70 @@
+note: Interactive story with conditionals and variables
+
+show "🏰 The Quest for the Magic Number"
+show "================================="
+
+create a string called hero with value "Brave Coder"
+create a number called health with value 100
+create a number called magic_number with value 42
+create a number called attempts with value 0
+
+show "Once upon a time, there was a hero named"
+show hero
+show "who embarked on a quest to find the magic number."
+show ""
+
+note: First challenge
+show "🗡️  First Challenge: The Mountain of Addition"
+create a number called base with value 10
+show "You found a base number:"
+show base
+
+add 15 to base
+add 1 to attempts
+show "After adding 15:"
+show base
+
+if base is above 20, show "✨ The mountain glows! You're on the right path." otherwise show "💀 The mountain remains dark."
+
+note: Second challenge  
+show ""
+show "🌟 Second Challenge: The River of Multiplication"
+multiply base by 2
+add 1 to attempts
+show "After crossing the river (multiplying by 2):"
+show base
+
+if base is above 40, show "🌊 The river parts before you!" otherwise show "🌊 The river blocks your path."
+
+note: Final revelation
+show ""
+show "🔮 The Oracle's Revelation"
+if base is equal to 50, show "❌ Close, but not quite the magic number." otherwise show "🤔 The quest continues..."
+
+note: Adjust to find the magic number
+subtract 8 from base
+add 1 to attempts
+show "The Oracle whispers: 'Subtract 8 from your number'"
+show "Your final number:"
+show base
+
+note: Check victory condition
+if base is equal to magic_number, show "🎉 SUCCESS! You found the magic number!" otherwise show "💔 The quest continues..."
+
+show ""
+show "📊 Quest Statistics:"
+show "Hero:"
+show hero
+show "Health:"
+show health
+show "Attempts made:"
+show attempts
+show "Magic number:"
+show magic_number
+show "Your number:"
+show base
+
+if base is equal to magic_number, show "🏆 VICTORY: You are now the Master of Numbers!" otherwise show "🗡️ Keep trying, brave hero!"
+
+show ""
+show "The End... or is it just the beginning? 🌟"

@@ -1,0 +1,85 @@
+note: Example of calling LLM models through MCP servers using NaturaCode
+
+show "🤖 NaturaCode LLM Integration Demo"
+show "===================================="
+
+note: Connect to an MCP server running Claude
+connect to MCP server at "claude://localhost:3001" with protocol "mcp"
+show "Connected to Claude MCP server"
+
+note: Set up our conversation context
+create a string called user_question with value "What are the benefits of natural language programming?"
+create a string called system_prompt with value "You are a helpful programming assistant. Explain concepts clearly and concisely."
+
+show "Asking Claude about natural language programming..."
+show "Question:"
+show user_question
+
+note: Send the prompt to Claude through MCP
+send message to model "claude-3-sonnet" with system prompt system_prompt and user message user_question
+wait for model response
+get the response as "claude_answer"
+
+show ""
+show "🧠 Claude's Response:"
+show claude_answer
+
+note: Follow up with a more specific question
+create a string called followup with value "Can you give me a specific example of how natural language programming makes coding more accessible?"
+
+show ""
+show "📝 Follow-up Question:"
+show followup
+
+send message to model "claude-3-sonnet" with user message followup
+wait for model response  
+get the response as "detailed_answer"
+
+show ""
+show "🎯 Detailed Response:"
+show detailed_answer
+
+note: Now let's try a different model for comparison
+connect to MCP server at "gpt://localhost:3002" with protocol "mcp"
+show ""
+show "🔄 Switching to GPT-4 for comparison..."
+
+send message to model "gpt-4" with user message "Compare natural language programming to traditional programming syntax"
+wait for model response
+get the response as "gpt_comparison"
+
+show ""
+show "🆚 GPT-4's Comparison:"
+show gpt_comparison
+
+note: Let's analyze both responses
+create a number called claude_length with value 0
+create a number called gpt_length with value 0
+
+measure length of claude_answer and store in claude_length
+measure length of gpt_comparison and store in gpt_length
+
+show ""
+show "📊 Response Analysis:"
+show "Claude response length:"
+show claude_length
+show "GPT response length:"  
+show gpt_length
+
+if claude_length is above gpt_length, show "✨ Claude gave a more detailed response" otherwise show "✨ GPT gave a more detailed response"
+
+note: Save the conversation for later reference
+create a task called "Review Claude's insights on natural language programming" with status "pending"
+create a task called "Compare GPT and Claude responses on programming accessibility" with status "pending"
+
+show ""
+show "📋 Created follow-up tasks:"
+show all tasks
+
+note: Disconnect from MCP servers
+disconnect from MCP server "claude://localhost:3001"
+disconnect from MCP server "gpt://localhost:3002"
+
+show ""
+show "🎉 LLM MCP integration demo complete!"
+show "Both models provided valuable insights on natural language programming."

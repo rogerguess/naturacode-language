@@ -1,0 +1,43 @@
+note: Welcome to our first conversation in NaturaCode!
+
+create a number called temperature with value 72
+create a string called weather with value "sunny"
+
+show "Let's check the weather today..."
+show weather
+show temperature
+
+if temperature is above 75, show "It's getting warm!" otherwise show "Perfect temperature!"
+
+add 10 to temperature
+show "Temperature after adding 10 degrees:"
+show temperature
+
+if temperature is above 75, show "Now it's definitely warm!"
+
+create a task called "Check weather app" with status "pending"
+create a task called "Water the plants" with status "pending"
+create a task called "Go for a walk" with status "complete"
+
+show "Here are my tasks for today:"
+show all tasks
+
+mark task "Check weather app" as complete
+show "Updated tasks:"
+show tasks where status is "complete"
+
+create a number called countdown with value 3
+show "Starting countdown..."
+
+repeat 3 times
+    show "Counting down..."
+    show countdown
+    subtract 1 from countdown
+end
+
+show "Blast off! 🚀"
+
+connect to the API at "https://api.weather.com/search"
+send a search for "sunny weather tips" using the key "query"
+get the response
+show the response
