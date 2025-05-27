@@ -59,21 +59,26 @@
         const { useState, useEffect, useRef } = React;
 
         function NaturaCodeIDE() {
-            const [code, setCode] = useState(`note: Welcome to NaturaCode! Try these examples:
+            const [code, setCode] = useState(`note: 🌿 Welcome to NaturaCode - Programming in Plain English!
 
-create a number called age with value 25
-show "Hello! I am"
-show age
-show "years old"
+show "Hello! Welcome to the future of programming 🚀"
 
-if age is above 18, show "I can vote!" otherwise show "Not old enough yet"
+note: Create and work with variables naturally
+create a string called name with value "Future Programmer"
+create a number called excitement with value 100
 
-create a task called "Learn NaturaCode" with status "pending"
-create a task called "Build something amazing" with status "pending"
-show all tasks
+show "Your name:"
+show name
+show "Excitement level:"
+show excitement
 
-mark task "Learn NaturaCode" as complete
-show tasks where status is "complete"`);
+note: Make decisions in plain English
+if excitement is above 90, show "🎉 You're going to love this!" otherwise show "Let's get started!"
+
+note: Try changing values and running again!
+note: Click 'Load Example...' above to see more features!
+
+show "Ready to revolutionize how you code? Let's go! 🌟"`);
             
             const [output, setOutput] = useState([]);
             const [isRunning, setIsRunning] = useState(false);
@@ -122,42 +127,140 @@ show tasks where status is "complete"`);
 
             const loadExample = (example) => {
                 const examples = {
-                    variables: `create a number called x with value 10
-add 5 to x
-multiply x by 2
-show x
+                    quickstart: `note: Welcome to NaturaCode! Your first program.
 
-create a string called greeting with value "Hello World"
-show greeting`,
+create a string called name with value "World"
+show "Hello,"
+show name
+show "Welcome to natural programming!"
 
-                    tasks: `create a task called "Write code" with status "pending"
-create a task called "Test code" with status "pending"
-create a task called "Deploy code" with status "complete"
+create a number called excitement with value 100
+if excitement is above 90, show "🎉 This is amazing!" otherwise show "This is pretty cool!"`,
 
-show all tasks
-mark task "Write code" as complete
-show tasks where status is "complete"`,
+                    variables: `note: Variables and Math - The Basics
 
-                    logic: `create a number called temperature with value 75
+create a number called temperature with value 72
+create a string called weather with value "sunny"
 
-if temperature is above 80, show "It's hot!" otherwise show "It's nice!"
+show "Today's weather:"
+show weather
+show "Temperature:"
+show temperature
 
 add 10 to temperature
-if temperature is above 80, show "Now it's hot!"`,
+show "After adding 10 degrees:"
+show temperature
 
-                    loops: `create a number called counter with value 0
+if temperature is above 80, show "🌡️ It's getting warm!" otherwise show "😌 Perfect temperature!"`,
+
+                    tasks: `note: Task Management - Stay Organized
+
+create a task called "Learn NaturaCode" with status "pending"
+create a task called "Build an app" with status "pending"  
+create a task called "Share with friends" with status "complete"
+
+show "📋 All Your Tasks:"
+show all tasks
+
+mark task "Learn NaturaCode" as complete
+show ""
+show "✅ Completed Tasks:"
+show tasks where status is "complete"
+
+show ""
+show "⏳ Pending Tasks:"
+show tasks where status is "pending"`,
+
+                    logic: `note: Logic and Decision Making
+
+create a number called score with value 85
+create a string called grade with value "unknown"
+
+show "Student Score Analysis"
+show "Score:"
+show score
+
+if score is above 90, show "🎓 Grade: A - Excellent!"
+if score is above 80, show "📚 Grade: B - Good work!" otherwise show "📖 Grade: C - Keep studying!"
+if score is below 60, show "⚠️ Grade: F - Need improvement"
+
+create a number called study_hours with value 20
+if study_hours is above 15, show "💪 Great study habits!" otherwise show "📅 Consider more study time"`,
+
+                    loops: `note: Loops and Repetition
+
+create a number called countdown with value 5
+show "🚀 Launch Sequence Starting..."
 
 repeat 5 times
-    add 1 to counter
-    show counter
+    show "T-minus"
+    show countdown
+    subtract 1 from countdown
 end
 
-show "Done counting!"`,
+show "🎆 Blast off!"
 
-                    api: `connect to the API at "https://api.example.com/search"
-send a search for "programming tips" using the key "query"
+create a number called energy with value 100
+show ""
+show "Energy Management:"
+
+while energy is above 20
+    show "Energy level:"
+    show energy
+    subtract 25 from energy
+end
+
+show "⚡ Time to recharge!"`,
+
+                    complete: `note: Complete Mini-Application - Personal Assistant
+
+create a string called assistant_name with value "Alex"
+create a number called energy with value 100
+create a number called tasks_completed with value 0
+
+show "🤖 Hello! I'm your assistant"
+show assistant_name
+
+create a task called "Check emails" with status "pending"
+create a task called "Schedule meeting" with status "pending"
+create a task called "Prepare presentation" with status "complete"
+
+show ""
+show "📋 Current Tasks:"
+show all tasks
+
+mark task "Check emails" as complete
+add 1 to tasks_completed
+subtract 15 from energy
+
+show ""
+show "✅ Task completed! Stats:"
+show "Energy remaining:"
+show energy
+show "Tasks completed today:"
+show tasks_completed
+
+if energy is below 50, show "😴 Time for a break!" otherwise show "💪 Ready for more tasks!"
+
+if tasks_completed is above 0, show "🎯 Great productivity today!"`,
+
+                    api: `note: API Integration Example
+
+connect to the API at "https://api.example.com/search"
+send a search for "natural language programming" using the key "query"
 get the response
-show the response`
+show "🌐 API Response:"
+show the response
+
+create a number called response_length with value 0
+measure length of response and store in response_length
+
+show ""
+show "📊 Response Analysis:"
+show "Length:"
+show response_length
+
+if response_length is above 100, show "📚 Detailed response received!" otherwise show "📝 Brief response received"`
                 };
 
                 setCode(examples[example] || examples.variables);
@@ -203,11 +306,13 @@ show the response`
                                             className="px-3 py-1 border border-gray-300 rounded-md text-sm"
                                         >
                                             <option value="">Load Example...</option>
-                                            <option value="variables">Variables & Math</option>
-                                            <option value="tasks">Task Management</option>
-                                            <option value="logic">Conditional Logic</option>
-                                            <option value="loops">Loops</option>
-                                            <option value="api">API Calls</option>
+                                            <option value="quickstart">🚀 Quick Start</option>
+                                            <option value="variables">📊 Variables & Math</option>
+                                            <option value="tasks">📋 Task Management</option>
+                                            <option value="logic">🤔 Logic & Decisions</option>
+                                            <option value="loops">🔄 Loops & Repetition</option>
+                                            <option value="complete">🎯 Complete App</option>
+                                            <option value="api">🌐 API Integration</option>
                                         </select>
                                     </div>
                                 </div>

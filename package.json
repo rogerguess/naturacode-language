@@ -12,7 +12,9 @@
     "cli": "node src/cli.js",
     "test": "jest",
     "dev": "node src/server.js",
-    "setup-github": "node setup-github.js"
+    "setup-github": "node setup-github.js",
+    "create-video": "node create-video.js",
+    "tutorial": "node src/cli.js examples/tutorial.nat"
   },
   "keywords": ["programming", "natural-language", "english", "code", "interpreter"],
   "author": "Claude & Human",

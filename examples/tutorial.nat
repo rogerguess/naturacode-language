@@ -1,0 +1,151 @@
+note: 🌿 NaturaCode Tutorial - Learn by Doing!
+
+show "╔═══════════════════════════════════════════╗"
+show "║                                           ║"
+show "║     🌿 Welcome to NaturaCode! 🌿          ║"
+show "║     Interactive Tutorial                  ║"
+show "║                                           ║"
+show "╚═══════════════════════════════════════════╝"
+
+show ""
+show "📚 LESSON 1: Variables and Basic Operations"
+show "============================================"
+
+note: Creating variables is as simple as describing what you want
+create a string called student_name with value "Future Programmer"
+create a number called lesson_number with value 1
+
+show "Hello,"
+show student_name
+show "Welcome to Lesson"
+show lesson_number
+
+note: We can do math with simple English
+add 1 to lesson_number
+show "Moving to lesson:"
+show lesson_number
+
+show ""
+show "📊 LESSON 2: Working with Numbers"
+show "=================================="
+
+create a number called score with value 0
+create a number called bonus_points with value 10
+
+show "Starting score:"
+show score
+
+add bonus_points to score
+show "After earning bonus points:"
+show score
+
+multiply score by 2
+show "After doubling your score:"
+show score
+
+show ""
+show "🤔 LESSON 3: Making Decisions"
+show "=============================="
+
+create a number called programming_experience with value 5
+
+show "Years of programming experience:"
+show programming_experience
+
+if programming_experience is above 3, show "🎓 You're experienced!" otherwise show "🌱 You're learning!"
+
+add 2 to programming_experience
+show "After learning NaturaCode:"
+show programming_experience
+
+if programming_experience is above 5, show "🚀 You're becoming an expert!"
+
+show ""
+show "📋 LESSON 4: Task Management"
+show "============================="
+
+create a task called "Learn variables" with status "complete"
+create a task called "Master conditionals" with status "complete"
+create a task called "Build first app" with status "pending"
+
+show "Your learning progress:"
+show all tasks
+
+mark task "Build first app" as complete
+show ""
+show "Updated progress:"
+show tasks where status is "complete"
+
+show ""
+show "🔄 LESSON 5: Loops and Repetition"
+show "=================================="
+
+create a number called countdown with value 3
+show "Launching your programming journey in:"
+
+repeat 3 times
+    show countdown
+    subtract 1 from countdown
+end
+
+show "🚀 Launch successful!"
+
+create a number called motivation with value 50
+show ""
+show "Building motivation:"
+
+while motivation is below 100
+    add 10 to motivation
+    show "Motivation level:"
+    show motivation
+end
+
+show "💪 Maximum motivation achieved!"
+
+show ""
+show "🎉 LESSON 6: Putting It All Together"
+show "===================================="
+
+create a string called achievement with value "NaturaCode Beginner"
+create a number called confidence with value 75
+create a number called projects_completed with value 0
+
+show "Your current status:"
+show "Achievement level:"
+show achievement
+show "Confidence:"
+show confidence
+
+add 1 to projects_completed
+if projects_completed is above 0, show "🎯 First project completed!"
+
+add 25 to confidence
+if confidence is above 90, show "🌟 High confidence unlocked!"
+
+show ""
+show "📜 TUTORIAL COMPLETE!"
+show "===================="
+
+show "Congratulations,"
+show student_name
+show "You've completed the NaturaCode tutorial!"
+
+show ""
+show "🎊 What you've learned:"
+show "• Creating and using variables"
+show "• Performing calculations"
+show "• Making logical decisions"
+show "• Managing tasks"
+show "• Using loops for repetition"
+show "• Building complete programs"
+
+show ""
+show "🚀 Next Steps:"
+show "• Try the other examples in the examples/ folder"
+show "• Visit the web interface at localhost:3000"
+show "• Start building your own NaturaCode applications"
+show "• Explore AI integration with LLM examples"
+
+show ""
+show "🌿 Welcome to the future of programming!"
+show "Where code becomes conversation! ✨"

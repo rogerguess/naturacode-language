@@ -109,24 +109,75 @@ async function interactive() {
     askQuestion();
 }
 
+function showExamples() {
+    console.log(NATURA_ASCII);
+    console.log('📚 Available NaturaCode Examples');
+    console.log('─'.repeat(50));
+    console.log('');
+    console.log('🚀 Getting Started:');
+    console.log('  first_conversation.nat    - Complete intro to NaturaCode features');
+    console.log('  calculator.nat           - Basic arithmetic operations');
+    console.log('');
+    console.log('🎮 Interactive:');
+    console.log('  interactive_story.nat    - Text adventure game with variables');
+    console.log('  todo_manager.nat         - Task management application');
+    console.log('');
+    console.log('🤖 Advanced:');
+    console.log('  llm_mcp_example.nat      - AI/LLM integration demo');
+    console.log('');
+    console.log('💡 Run any example:');
+    console.log('  node cli.js examples/<filename>');
+    console.log('');
+    console.log('Example:');
+    console.log('  node cli.js examples/first_conversation.nat');
+    console.log('  node cli.js examples/interactive_story.nat');
+}
+
 function showHelp() {
     console.log(NATURA_ASCII);
     console.log('📖 NaturaCode CLI Help');
     console.log('─'.repeat(50));
     console.log('');
-    console.log('Usage:');
+    console.log('🚀 Usage:');
     console.log('  node cli.js <file.nat>     Run a NaturaCode file');
     console.log('  node cli.js -i             Start interactive mode');
     console.log('  node cli.js --help          Show this help');
+    console.log('  node cli.js --examples      List available examples');
     console.log('');
-    console.log('Example Commands:');
-    console.log('  create a number called x with value 10');
-    console.log('  add 5 to x');
-    console.log('  if x is above 12, show "High"');
-    console.log('  create a task called "Learn NaturaCode" with status "pending"');
-    console.log('  show all tasks');
+    console.log('📝 Basic Commands:');
+    console.log('  Variables:');
+    console.log('    create a number called x with value 10');
+    console.log('    create a string called name with value "Alice"');
     console.log('');
-    console.log('For more examples, check the examples/ directory');
+    console.log('  Math:');
+    console.log('    add 5 to x');
+    console.log('    subtract 3 from x');
+    console.log('    multiply x by 2');
+    console.log('');
+    console.log('  Logic:');
+    console.log('    if x is above 12, show "High" otherwise show "Low"');
+    console.log('');
+    console.log('  Tasks:');
+    console.log('    create a task called "Learn NaturaCode" with status "pending"');
+    console.log('    mark task "Learn NaturaCode" as complete');
+    console.log('    show all tasks');
+    console.log('');
+    console.log('  Loops:');
+    console.log('    repeat 5 times, show "Hello"');
+    console.log('    while x is below 10, add 1 to x');
+    console.log('');
+    console.log('🎯 Quick Start:');
+    console.log('  node cli.js examples/first_conversation.nat');
+    console.log('  node cli.js examples/interactive_story.nat');
+    console.log('');
+    console.log('🌐 Web Interface:');
+    console.log('  npm start   # Launch web interface at localhost:3000');
+    console.log('');
+    console.log('💡 Tips:');
+    console.log('  • Use descriptive variable names');
+    console.log('  • Add comments with "note: your comment"');
+    console.log('  • Check examples/ directory for more inspiration');
+    console.log('  • Visit localhost:3000 for interactive coding');
 }
 
 // Parse command line arguments
@@ -134,6 +185,8 @@ const args = process.argv.slice(2);
 
 if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
     showHelp();
+} else if (args[0] === '--examples' || args[0] === '-e') {
+    showExamples();
 } else if (args[0] === '-i' || args[0] === '--interactive') {
     interactive();
 } else {

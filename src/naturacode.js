@@ -33,9 +33,13 @@ class NaturaCode {
             
             // Arithmetic: "add 5 to x"
             add: /^add (-?\d+(?:\.\d+)?) to (\w+)$/i,
+            addVar: /^add (\w+) to (\w+)$/i,
             subtract: /^subtract (-?\d+(?:\.\d+)?) from (\w+)$/i,
+            subtractVar: /^subtract (\w+) from (\w+)$/i,
             multiply: /^multiply (\w+) by (-?\d+(?:\.\d+)?)$/i,
+            multiplyVar: /^multiply (\w+) by (\w+)$/i,
             divide: /^divide (\w+) by (-?\d+(?:\.\d+)?)$/i,
+            divideVar: /^divide (\w+) by (\w+)$/i,
             
             // Tasks: "create a task called 'Write report' with status 'pending'"
             createTask: /^create (?:a )?task called "([^"]*)" with status "([^"]*)"$/i,
@@ -166,6 +170,61 @@ class NaturaCode {
                     }
                     this.context.variables[divVar] /= divValue;
                     this.output(`Divided ${divVar} by ${divValue}. New value: ${this.context.variables[divVar]}`);
+                    break;
+
+                case 'addVar':
+                    const addSourceVar = node.matches[0];
+                    const addTargetVar = node.matches[1];
+                    if (!(addSourceVar in this.context.variables)) {
+                        throw new Error(`Variable ${addSourceVar} doesn't exist yet. Create it first!`);
+                    }
+                    if (!(addTargetVar in this.context.variables)) {
+                        throw new Error(`Variable ${addTargetVar} doesn't exist yet. Create it first!`);
+                    }
+                    this.context.variables[addTargetVar] += this.context.variables[addSourceVar];
+                    this.output(`Added ${addSourceVar} (${this.context.variables[addSourceVar]}) to ${addTargetVar}. New value: ${this.context.variables[addTargetVar]}`);
+                    break;
+
+                case 'subtractVar':
+                    const subSourceVar = node.matches[0];
+                    const subTargetVar = node.matches[1];
+                    if (!(subSourceVar in this.context.variables)) {
+                        throw new Error(`Variable ${subSourceVar} doesn't exist yet. Create it first!`);
+                    }
+                    if (!(subTargetVar in this.context.variables)) {
+                        throw new Error(`Variable ${subTargetVar} doesn't exist yet. Create it first!`);
+                    }
+                    this.context.variables[subTargetVar] -= this.context.variables[subSourceVar];
+                    this.output(`Subtracted ${subSourceVar} (${this.context.variables[subSourceVar]}) from ${subTargetVar}. New value: ${this.context.variables[subTargetVar]}`);
+                    break;
+
+                case 'multiplyVar':
+                    const multSourceVar = node.matches[0];
+                    const multTargetVar = node.matches[1];
+                    if (!(multSourceVar in this.context.variables)) {
+                        throw new Error(`Variable ${multSourceVar} doesn't exist yet. Create it first!`);
+                    }
+                    if (!(multTargetVar in this.context.variables)) {
+                        throw new Error(`Variable ${multTargetVar} doesn't exist yet. Create it first!`);
+                    }
+                    this.context.variables[multSourceVar] *= this.context.variables[multTargetVar];
+                    this.output(`Multiplied ${multSourceVar} by ${multTargetVar} (${this.context.variables[multTargetVar]}). New value: ${this.context.variables[multSourceVar]}`);
+                    break;
+
+                case 'divideVar':
+                    const divSourceVar = node.matches[0];
+                    const divTargetVar = node.matches[1];
+                    if (!(divSourceVar in this.context.variables)) {
+                        throw new Error(`Variable ${divSourceVar} doesn't exist yet. Create it first!`);
+                    }
+                    if (!(divTargetVar in this.context.variables)) {
+                        throw new Error(`Variable ${divTargetVar} doesn't exist yet. Create it first!`);
+                    }
+                    if (this.context.variables[divTargetVar] === 0) {
+                        throw new Error("Cannot divide by zero! That would break the universe.");
+                    }
+                    this.context.variables[divSourceVar] /= this.context.variables[divTargetVar];
+                    this.output(`Divided ${divSourceVar} by ${divTargetVar} (${this.context.variables[divTargetVar]}). New value: ${this.context.variables[divSourceVar]}`);
                     break;
 
                 case 'createTask':
