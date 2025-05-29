@@ -1,3 +1,5 @@
+.... a vibe code experiment with claude code 
+
 # 🌿 NaturaCode
 
 **Programming in Plain English**
